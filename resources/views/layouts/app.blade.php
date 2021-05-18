@@ -8,7 +8,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -16,21 +16,69 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <body class="font-sans text-gray-900 text-sm bg-grey-background">
+    <header class="flex items-center justify-between px-8 py-4">
+        <a href="#"><img src="{{asset('img/logo.svg')}}" alt="logo"></a>
+        <div class="flex items-center">
+            @if (Route::has('login'))
+                <div class="px-6 py-4">
+                    @auth
+                        <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
+                                <a href="{{ route('logout') }}"
+                                                       onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                                    {{ __('Log out') }}
+                                </a>
+                            </form>
+                        @else
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
+
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                        @endif
+                    @endauth
                 </div>
-            </header>
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            @endif
+            <a href="#">
+                <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                     alt="grav"
+                     class="w-10 h-10 rounded-full"
+                />
+            </a>
         </div>
+    </header>
+    <main class="container mx-auto max-w-custom flex" style="max-width: 1000px;">
+        <div class="w-70 mr-5">
+            Add idea forum Aliquam aliquid assumenda blanditiis commodi delectus dolore dolorem dolorum ea esse, id iusto laboriosam molestiae nam obcaecati
+            possimus quia ratione, rem sed temporibus vitae? A corporis itaque neque nostrum placeat veniam veritatis voluptates. Aperiam consequuntur ducimus eum iure perspiciatis placeat provident
+            tempore ut voluptate! Architecto doloremque ea libero maxime molestias natus non odit officia, perspiciatis praesentium quae quia sint. A asperiores, consectetur dicta ducimus, eius eum
+            iusto, laborum modi nihil obcaecati sunt tempora! Accusantium aliquam et modi quasi sit! Accusantium deleniti laboriosam, officia repellendus sit unde voluptates voluptatibus? Architecto
+            dolores ipsum laboriosam.
+        </div>
+        <div class="w-175">
+            <nav class="flex items-center justify-between text-xs">
+                <ul class="flex uppercase font-semibold border-b-4 pb-3 space-x-10">
+                    <li>
+                        <a href="" class="border-b-4 pb-3 border-blue">All ideas (87)</a>
+                        <a href="" class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue">Considering (6)</a>
+                        <a href="" class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue">In progress (1)</a>
+                    </li>
+                </ul>
+
+                <ul class="flex uppercase font-semibold border-b-4 pb-3 space-x-10">
+                    <li>
+                        <a href="" class="border-b-4 pb-3 border-blue">All ideas (87)</a>
+                        <a href="" class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue">Considering</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="mt-8">
+                {{$slot}}
+            </div>
+        </div>
+    </main>
     </body>
 </html>
